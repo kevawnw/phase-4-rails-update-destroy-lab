@@ -8,7 +8,7 @@ class PlantsController < ApplicationController
 
   # GET /plants/:id
   def show
-    plant = Plant.find_by(id: params[:id])
+    plant = find_plant
     render json: plant
   end
 
@@ -16,6 +16,22 @@ class PlantsController < ApplicationController
   def create
     plant = Plant.create(plant_params)
     render json: plant, status: :created
+  end
+
+  def update
+    plant = find_plant
+    plant.update(plant_params)
+    render json: plant
+  end
+
+  def destroy
+   plant = find_plant
+   plant.destroy
+   render json: plant
+  end   
+
+  def find_plant
+    Plant.find_by!(id: params[:id])
   end
 
   private
